@@ -1,6 +1,9 @@
+require('dotenv').config();
 const express = require('express');
 const bodyParser = require('body-parser');
 const mysql = require('mysql2/promise');
+const passport = require('passport');
+const session = require('express-session');
 const path = require('path');
 
 const app = express();
@@ -21,6 +24,17 @@ app.set('views', path.join(__dirname, 'Views'));
 // Configuración para servir archivos estáticos
 app.use('/Public', express.static(path.join(__dirname, '/Public')));
 
+// Configurar sesiones
+app.use(session({
+  secret: process.env.SESSION_SECRET,
+  resave: false,
+  saveUninitialized: false
+}));
+
+// Inicializar Passport
+app.use(passport.initialize());
+app.use(passport.session());
+
 // Middleware para añadir la conexión a la base de datos a las solicitudes
 app.use((req, res, next) => {
   req.db = db;
@@ -38,14 +52,23 @@ const adminRoutes = require('./Routes/adminRoutes');
 app.use('/admin', adminRoutes);
 
 app.get('/', (req, res) => {
-  res.render('./User/index'); // O puedes renderizar una vista
+  res.render('./User/index'); // O se puede renderizar una vista
 });
 
-app.get('/Login', (req, res) => {
+app.get('/login', (req, res) => {
   res.render('Login');
 });
 
-const PORT = process.env.PORT || 3000;
+app.get('/reset-password', (req, res) => {
+  res.render('ResetPassword'); 
+});
+
+
+const PORT = process.env.PORT || 3300;
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
 });
+
+// Passport configuration
+require('./Passport/passport-setup');
+require('./Passport/passport-setupFacebook');

@@ -7,8 +7,7 @@ CREATE TABLE Usuarios (
     nombre VARCHAR(255) NOT NULL,
     correo VARCHAR(255) NOT NULL UNIQUE,
     contraseña VARCHAR(255),
-    telefono VARCHAR(20),
-    proveedor ENUM('local', 'facebook', 'github') NOT NULL,
+    proveedor ENUM('local', 'facebook') NOT NULL,
     id_proveedor VARCHAR(255),
     creado_en TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     actualizado_en TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
@@ -63,4 +62,12 @@ CREATE TABLE Pagos (
     creado_en TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     actualizado_en TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     FOREIGN KEY (id_reservacion) REFERENCES Reservaciones(id)
+);
+
+CREATE TABLE RestablecimientoContraseña (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    correo VARCHAR(255) NOT NULL,
+    token VARCHAR(255) NOT NULL UNIQUE,
+    expiracion TIMESTAMP NOT NULL,
+    creado_en TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
