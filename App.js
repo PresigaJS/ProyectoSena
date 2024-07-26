@@ -52,7 +52,7 @@ const adminRoutes = require('./Routes/adminRoutes');
 app.use('/admin', adminRoutes);
 
 app.get('/', (req, res) => {
-  res.render('./User/index'); // O se puede renderizar una vista
+  res.render('User/index'); // O se puede renderizar una vista
 });
 
 app.get('/login', (req, res) => {
@@ -60,10 +60,10 @@ app.get('/login', (req, res) => {
 });
 
 app.get('/reset-password', (req, res) => {
-  res.render('ResetPassword'); 
+  res.render('ResetPassword');
 });
 
-
+// Puerto
 const PORT = process.env.PORT || 3300;
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
