@@ -14,6 +14,13 @@ const db = mysql.createPool({
   user: 'root',
   password: '',
   database: 'ProyectoEventify'
+
+  /*
+  host: 'sql302.infinityfree.com',
+  user: 'if0_37016621',
+  password: '62yFFArM5M',
+  database: 'ProyectoEventify'
+  */
 });
 
 app.use(bodyParser.json());
